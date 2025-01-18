@@ -15,9 +15,15 @@
         @endif
         <form method="POST" action="{{ route('admin.results.submit') }}">
             @csrf
+<<<<<<< HEAD
 	    @foreach (['Quarters', 'Semifinals', 'Final', 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18] as $phase)
                 @if (isset($matches[$phase]))
 		    <h2 class="text-center mt-5">
+=======
+            @foreach (['Quarters', 'Semifinals', 'Final', 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18] as $phase)
+                @if (isset($matches[$phase]))
+                    <h2 class="text-center mt-5">
+>>>>>>> d2933f6797b016b248c63e88fe57bcd23cfd941e
                         @if ($phase == 'Quarters') Cuartos de Final
                         @elseif ($phase == 'Semifinals') Semifinales
                         @elseif ($phase == 'Final') Final
@@ -41,7 +47,10 @@
                         @elseif ($phase == 18 ) Jornada 18
                         @endif
                     </h2>
+<<<<<<< HEAD
 
+=======
+>>>>>>> d2933f6797b016b248c63e88fe57bcd23cfd941e
                     <div class="row">
                         @foreach ($matches[$phase] as $match)
                             <div class="col-md-6">
