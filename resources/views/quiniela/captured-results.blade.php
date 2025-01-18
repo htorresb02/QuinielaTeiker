@@ -24,7 +24,8 @@
     
     <div class="row">
         @foreach ($matches as $match)
-            <div class="col-md-6">
+            @if($match->activo == 1)
+	     <div class="col-md-6">
                 <div class="card mb-4">
                     <div class="card-body">
                         <!-- Título del partido con imágenes -->
@@ -61,6 +62,7 @@
                     </div>
                 </div>
             </div>
+	   @endif
         @endforeach
     </div>
 </div>

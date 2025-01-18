@@ -28,4 +28,9 @@ class Prediction extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function predictions()
+    {
+        return $this->hasMany(Prediction::class, 'match_id');
+    }
 }

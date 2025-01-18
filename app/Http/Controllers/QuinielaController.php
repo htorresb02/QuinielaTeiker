@@ -18,7 +18,7 @@ class QuinielaController extends Controller
         // Si no hay usuario, regresar sin datos de predicciones
         if (!$user) {
             return view('quiniela.form', [
-                'matches' => FootballMatch::all()->groupBy('phase'),
+                'matches' => FootballMatch::where('activo', 1)->get()->groupBy('phase'),
                 'userPredictions' => [],
                 'user' => null,
                 'pendingMatches' => [],
@@ -36,9 +36,10 @@ class QuinielaController extends Controller
             ->groupBy('phase');
 
         // Cargar todos los partidos agrupados por fase
-        $matches = FootballMatch::all()->groupBy('phase');
-
-        return view('quiniela.form', compact('matches', 'userPredictions', 'user', 'pendingMatches'));
+        //$matches = FootballMatch::all()->groupBy('phase');
+	$matches = FootballMatch::all()->where('activo', 1)->groupBy('phase');
+	//dd($matches2);
+	return view('quiniela.form', compact('matches', 'userPredictions', 'user', 'pendingMatches'));
     }
 
     public function submitForm(Request $request)
@@ -77,15 +78,27 @@ class QuinielaController extends Controller
 
     public function ranking()
     {
-        $users = User::with('predictions.match')->get();
+	    // Obtener usuarios con predicciones
+        $users = User::with(['predictions.match'])->get();
+        $phase = FootballMatch::where('activo', 1)->latest('id')->pluck('phase')->first();
+        // Filtrar partidos activos y, si se especifica, de una jornada/fase específica
+        $query = FootballMatch::where('activo', 1);
+        if ($phase) {
+            $query->where('phase', $phase);
+        }
+        $matches = $query->get()->groupBy('phase');
 
-        $matches = FootballMatch::all()->groupBy('phase'); // Agrupar partidos por fase
-
-        $rankings = $users->map(function ($user) {
+        // Calcular puntos por usuario para la jornada/fase especificada
+        $rankings = $users->map(function ($user) use ($phase) {
             $points = 0;
 
             foreach ($user->predictions as $prediction) {
                 $match = $prediction->match;
+
+                // Ignorar partidos fuera de la jornada/fase especificada
+                if ($phase && $match->phase !== $phase) {
+                    continue;
+                }
 
                 if (isset($match->score_a, $match->score_b)) {
                     // Regla 1: Marcador exacto
@@ -118,14 +131,53 @@ class QuinielaController extends Controller
             ];
         })->sortByDesc('points')->values();
 
-        return view('quiniela.ranking', compact('rankings', 'matches'));
-    }
+        // Calcular puntos acumulados
+        $overallRankings = $users->map(function ($user) {
+            $totalPoints = 0;
 
+            foreach ($user->predictions as $prediction) {
+                $match = $prediction->match;
+
+                if (isset($match->score_a, $match->score_b)) {
+                    // Regla 1: Marcador exacto
+                    if (
+                        $match->score_a == $prediction->predicted_score_a &&
+                        $match->score_b == $prediction->predicted_score_b
+                    ) {
+                        $totalPoints += 3;
+                    }
+                    // Regla 2: Empate predicho correctamente (sin importar el marcador exacto)
+                    elseif (
+                        $match->score_a == $match->score_b && // Resultado oficial es empate
+                        $prediction->predicted_score_a == $prediction->predicted_score_b // Usuario predijo empate
+                    ) {
+                        $totalPoints += 1;
+                    }
+                    // Regla 3: Ganador correcto (sin marcador exacto)
+                    elseif (
+                        ($match->score_a > $match->score_b && $prediction->predicted_score_a > $prediction->predicted_score_b) || // Usuario acertó que ganó el equipo A
+                        ($match->score_a < $match->score_b && $prediction->predicted_score_a < $prediction->predicted_score_b)    // Usuario acertó que ganó el equipo B
+                    ) {
+                        $totalPoints += 1;
+                    }
+                }
+            }
+
+            return [
+                'name' => $user->name,
+                'total_points' => $totalPoints,
+            ];
+        })->sortByDesc('total_points')->values();
+
+        return view('quiniela.ranking', compact('rankings', 'overallRankings', 'matches', 'phase'));
+    }
     public function capturedResults()
     {
         // Recuperar partidos con predicciones y usuarios
-        $matches = FootballMatch::with('predictions.user')->get();
-
+        //$matches = FootballMatch::with('predictions.user')->get();
+	$matches = FootballMatch::with(['predictions' => function ($query) {
+            $query->where('activo', 1); // Solo predicciones activas
+        }])->get();
         return view('quiniela.captured-results', compact('matches'));
     }
 }
