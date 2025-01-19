@@ -6,6 +6,7 @@ use App\Models\FootballMatch;
 use App\Models\Prediction;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class QuinielaController extends Controller
 {

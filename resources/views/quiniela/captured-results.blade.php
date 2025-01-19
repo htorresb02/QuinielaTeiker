@@ -1,25 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="{{ asset('logo-liga_mx.png') }}">
-    <title>Resultados Capturados</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .team-logo {
-            width: 40px;
-            height: 40px;
-            object-fit: contain;
-            border-radius: 50%;
-        }
-    </style>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('title', 'Resultados Capturados')
+
+@section('content')
+
+<style>
+    .team-logo {
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+        border-radius: 50%;
+    }
+</style>
+
 <div class="container my-5">
-    <div class="text-left mt-3">
+    {{-- <div class="text-left mt-3">
         <a href="{{ route('quiniela.form') }}" class="btn btn-secondary"><- Regresar</a>
-    </div>
+    </div> --}}
     <h1 class="text-center">Resultados Capturados</h1>
     
     <div class="row">
@@ -67,5 +64,4 @@
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+@endsection 

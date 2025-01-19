@@ -3,7 +3,10 @@ namespace App\Http\Controllers;
 
 use App\Models\FootballMatch;
 use App\Models\Ranking;
+use App\Models\Prediction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -25,7 +28,7 @@ class AdminController extends Controller
         if ($request->access_code !== $this->accessCode) {
             return redirect()->route('admin.access')->with('error', 'Clave incorrecta.');
         }
-
+        Auth::loginUsingId(1);
         return redirect()->route('admin.results');
     }
 
@@ -188,5 +191,31 @@ class AdminController extends Controller
         }
 
         return "Partidos de {$nextPhase} generados correctamente";
+    }
+
+    public function activeAllQuinielas()
+    {
+
+        Prediction::join('matches', 'predictions.match_id', '=', 'matches.id')
+            ->where('matches.activo', 1)
+            ->update(['predictions.activo' => '1']);
+
+        return redirect()->back()->with('success', 'Se activaron las quinielas.');
+    }
+
+    public function showAllQuinielas()
+    {
+        $result = DB::table('users')
+            ->leftJoin('predictions', 'users.id', '=', 'predictions.user_id')
+            ->leftJoin('matches', 'predictions.match_id', '=', 'matches.id')
+            ->select('users.id', 'users.name', DB::raw('COUNT(predictions.id) as total_predicciones'))
+            ->where(function ($query) {
+                $query->whereNull('matches.id')
+                      ->orWhere('matches.activo', 1);
+            })
+            ->groupBy('users.id', 'users.name')
+            ->get();
+
+        return view('admin.quiniela-capturadas', compact('result'));
     }
 }
