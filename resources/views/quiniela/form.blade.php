@@ -117,11 +117,15 @@
                                                 <p class="text-muted">Pronóstico enviado</p>
                                                 <input type="number" class="form-control mb-2" value="{{ $prediction->predicted_score_a }}" disabled>
                                                 <p class="text-muted">Resultado: {{ $match->score_a }}</p>
-                                            @elseif (!isset($match->score_a) && !isset($match->score_b))
+                                            @elseif (!isset($match->score_a) && !isset($match->score_b) && !is_null($user))
                                                 <input type="number" class="form-control" name="predictions[{{ $match->id }}][score_a]" placeholder="Marcador" required>
                                             @else
-                                                <p class="text-muted">Predicción cerrada</p>
-                                                <p class="text-muted">Resultado: {{ $match->score_a }}</p>
+                                                @if(is_null($user))
+                                                    <p class="text-muted">Inicia sesión para capturar tu predicción</p>
+                                                @else
+                                                    <p class="text-muted">Predicción cerrada</p>
+                                                    <p class="text-muted">Resultado: {{ $match->score_a }}</p>
+                                                @endif
                                             @endif
                                         </div>
                                         <div class="col-2 align-self-center">
@@ -134,11 +138,16 @@
                                                 <p class="text-muted">Pronóstico enviado</p>
                                                 <input type="number" class="form-control mb-2" value="{{ $prediction->predicted_score_b }}" disabled>
                                                 <p class="text-muted">Resultado: {{ $match->score_b }}</p>
-                                            @elseif (!isset($match->score_a) && !isset($match->score_b))
+                                            @elseif (!isset($match->score_a) && !isset($match->score_b)  && !is_null($user))
                                                 <input type="number" class="form-control" name="predictions[{{ $match->id }}][score_b]" placeholder="Marcador" required>
                                             @else
-                                                <p class="text-muted">Predicción cerrada</p>
-                                                <p class="text-muted">Resultado: {{ $match->score_b }}</p>
+                                                @if(is_null($user))
+                                                    <p class="text-muted">Inicia sesión para capturar tu predicción</p>
+                                                @else
+                                                    <p class="text-muted">Predicción cerrada</p>
+                                                    <p class="text-muted">Resultado: {{ $match->score_b }}</p>
+                                                @endif
+                                                
                                             @endif
                                         </div>
                                     </div>
@@ -206,10 +215,10 @@
     </form>
 
     <!-- Botón para ver el ranking -->
-    <div class="text-center mt-3">
+    {{-- <div class="text-center mt-3">
         <a href="{{ route('quiniela.ranking') }}" class="btn btn-secondary">Ver Puntuaciones</a>
         <a href="{{ route('quiniela.quinielas-capturadas') }}" class="btn btn-secondary">Ver Quinielas</a>
-    </div>
+    </div> --}}
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
