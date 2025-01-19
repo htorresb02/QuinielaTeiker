@@ -209,9 +209,11 @@
             @endif
         @endforeach
 
-        <div class="text-center mt-4">
-            <button type="submit" class="btn btn-primary">Enviar Predicciones</button>
-        </div>
+        @if(!is_null($user))
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary">Enviar Predicciones</button>
+            </div>
+        @endif
     </form>
 
     <!-- Botón para ver el ranking -->
