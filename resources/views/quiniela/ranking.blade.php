@@ -6,11 +6,7 @@
     <title>Tabla de Posiciones</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('logo-liga_mx.png') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<<<<<<< HEAD
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"> 
-=======
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
->>>>>>> d2933f6797b016b248c63e88fe57bcd23cfd941e
     <style>
         .match-card {
             border: 1px solid #ddd;
@@ -36,10 +32,7 @@
         <a href="{{ route('quiniela.form') }}" class="btn btn-secondary"><- Regresar</a>
     </div>
     <h1 class="text-center">Tabla de Posiciones</h1>
-<<<<<<< HEAD
-=======
 
->>>>>>> d2933f6797b016b248c63e88fe57bcd23cfd941e
     {{-- Puntos por Jornada/Fase --}}
     @if ($phase)
         <h2 class="text-center">Ranking - {{ is_numeric($phase) ? 'Jornada ' . $phase : ucfirst($phase) }}</h2>
@@ -62,10 +55,7 @@
             </tbody>
         </table>
     @endif
-<<<<<<< HEAD
-=======
 
->>>>>>> d2933f6797b016b248c63e88fe57bcd23cfd941e
     <!-- Rankings -->
     <h2 class="text-center">Puntos Acumulados</h2>
     <table class="table table-bordered table-striped text-center mt-4">
@@ -79,7 +69,6 @@
         </thead>
         <tbody>
             @foreach ($overallRankings as $index => $user)
-<<<<<<< HEAD
                 @php
                     // Determinar el color según la posición
                     $borderColor = '';
@@ -95,9 +84,6 @@
                 @endphp
                 <tr >
                     <td style="width: 10px; height: 100%;" ><div style="width: 10px; height: 100%; {{ $borderColor }} border-radius: 2px;"></div></td>
-=======
-                <tr>
->>>>>>> d2933f6797b016b248c63e88fe57bcd23cfd941e
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $user['name'] }}</td>
                     <td>{{ $user['total_points'] }}</td>
@@ -109,32 +95,27 @@
     <!-- Partidos por fase -->
     @foreach ([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18, 'Quarters', 'Semifinals', 'Final'] as $phase)
         <h2 class="text-center mt-5">
-<<<<<<< HEAD
-	   @if ($phase == 1 ) Jornada 1
-=======
-            @if ($phase == 1 ) Jornada 1
->>>>>>> d2933f6797b016b248c63e88fe57bcd23cfd941e
-            @elseif ($phase == 2 ) Jornada 2
-            @elseif ($phase == 3 ) Jornada 3
-            @elseif ($phase == 4 ) Jornada 4
-            @elseif ($phase == 5 ) Jornada 5
-            @elseif ($phase == 6 ) Jornada 6
-            @elseif ($phase == 7 ) Jornada 7
-            @elseif ($phase == 8 ) Jornada 8
-            @elseif ($phase == 9 ) Jornada 9
-            @elseif ($phase == 10 ) Jornada 10
-            @elseif ($phase == 11 ) Jornada 11
-            @elseif ($phase == 12 ) Jornada 12
-            @elseif ($phase == 13 ) Jornada 13
-            @elseif ($phase == 14 ) Jornada 14
-            @elseif ($phase == 15 ) Jornada 15
-            @elseif ($phase == 16 ) Jornada 16
-            @elseif ($phase == 17 ) Jornada 17
-            @elseif ($phase == 18 ) Jornada 18
-            @elseif ($phase == 'Quarters') Cuartos de Final
-            @elseif ($phase == 'Semifinals') Semifinales
-            @elseif ($phase == 'Final') Final
-            @endif
+        @if ($phase == 1 ) Jornada 1
+        @elseif ($phase == 2 ) Jornada 2
+        @elseif ($phase == 3 ) Jornada 3
+        @elseif ($phase == 4 ) Jornada 4
+        @elseif ($phase == 5 ) Jornada 5
+        @elseif ($phase == 6 ) Jornada 6
+        @elseif ($phase == 7 ) Jornada 7
+        @elseif ($phase == 8 ) Jornada 8
+        @elseif ($phase == 9 ) Jornada 9
+        @elseif ($phase == 10 ) Jornada 10
+        @elseif ($phase == 11 ) Jornada 11
+        @elseif ($phase == 12 ) Jornada 12
+        @elseif ($phase == 13 ) Jornada 13
+        @elseif ($phase == 14 ) Jornada 14
+        @elseif ($phase == 15 ) Jornada 15
+        @elseif ($phase == 16 ) Jornada 16
+        @elseif ($phase == 17 ) Jornada 17
+        @elseif ($phase == 'Quarters') Cuartos de Final
+        @elseif ($phase == 'Semifinals') Semifinales
+        @elseif ($phase == 'Final') Final
+        @endif
         </h2>
         <div class="row">
             @foreach ($matches[$phase] ?? [] as $match)

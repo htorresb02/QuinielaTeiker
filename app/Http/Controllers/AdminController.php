@@ -32,13 +32,9 @@ class AdminController extends Controller
     // Mostrar formulario para capturar resultados
     public function showResultsForm()
     {
-<<<<<<< HEAD
-	$matches = FootballMatch::where('activo', 1)->get()->groupBy('phase'); // Agrupar partidos por fase
-	return view('admin.results', compact('matches'));
-=======
-        $matches = FootballMatch::where('activo', 1)->get()->groupBy('phase'); // Agrupar partidos por fase
-        return view('admin.results', compact('matches'));
->>>>>>> d2933f6797b016b248c63e88fe57bcd23cfd941e
+    	$matches = FootballMatch::where('activo', 1)->get()->groupBy('phase'); // Agrupar partidos por fase
+    	return view('admin.results', compact('matches'));
+
     }
 
     // Capturar resultados y avanzar equipos
