@@ -25,3 +25,5 @@ Route::get('/admin/results', [AdminController::class, 'showResultsForm'])->name(
 Route::post('/admin/results', [AdminController::class, 'submitResults'])->name('admin.results.submit');
 Route::get('/admin/activar-quinielas', [AdminController::class, 'activeAllQuinielas'])->name('admin.activar-quinielas');
 Route::get('/admin/ver-quinielas', [AdminController::class, 'showAllQuinielas'])->name('admin.ver-quinielas');
+
+Route::get('/dashboard', [QuinielaController::class, 'dashboard'])->name('quiniela.dashboard');
