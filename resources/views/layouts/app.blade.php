@@ -21,24 +21,18 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
             <a class="navbar-brand" href="{{ route('quiniela.welcome') }}">Quinielas</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('quiniela.form') ? 'active' : '' }}" 
-                           href="{{ route('quiniela.form') }}">Inicio</a>
+                        <a class="nav-link {{ request()->routeIs('quiniela.welcome') ? 'active' : '' }}" 
+                           href="{{ route('quiniela.welcome') }}">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('quiniela.ranking') ? 'active' : '' }}" 
-                           href="{{ route('quiniela.ranking') }}">Puntuaciones</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('quiniela.dashboard') ? 'active' : '' }}" 
-                           href="{{ route('quiniela.dashboard') }}">
-                            <i class="fas fa-chart-line"></i> Dashboard
-                        </a>
+                        <a class="nav-link {{ request()->is('quiniela/ranking') ? 'active' : '' }}" 
+                           href="/quiniela/ranking">Puntuaciones</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ request()->is('quiniela/quinielas-capturadas') ? 'active' : '' }}" 
