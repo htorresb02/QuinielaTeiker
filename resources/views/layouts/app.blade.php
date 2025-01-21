@@ -56,6 +56,8 @@
                                 <li>
                                     <a class="dropdown-item {{ request()->is('admin/activar-quinielas') ? 'active' : '' }}" 
                                        href="/admin/activar-quinielas">Activar Quinielas</a>
+                                </li><li>
+                                    <li><a class="dropdown-item" href="{{ route('admin.matches') }}">Gestionar Partidos</a></li>
                                 </li>
                             </ul>
                         </li>

@@ -218,4 +218,77 @@ class AdminController extends Controller
 
         return view('admin.quiniela-capturadas', compact('result'));
     }
+
+    public function showMatchForm()
+    {
+        $phases = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17, 'Quarters', 'Semifinals', 'Final'];
+        $teams = DB::table('rankings')->select('club', 'logo')->get();
+        $matches = FootballMatch::orderBy('phase')->orderBy('is_first_leg')->get()->groupBy('phase');
+        
+        return view('admin.matches', compact('phases', 'teams', 'matches'));
+    }
+
+    public function activatePhaseMatches(Request $request)
+    {
+        $request->validate([
+            'phase' => 'required'
+        ]);
+
+        FootballMatch::where('phase', $request->phase)
+            ->update(['activo' => 1]);
+
+        return redirect()->route('admin.matches')
+            ->with('success', "Partidos de la fase {$request->phase} activados correctamente");
+    }
+
+    public function deactivatePhaseMatches(Request $request)
+    {
+        $request->validate([
+            'phase' => 'required'
+        ]);
+
+        FootballMatch::where('phase', $request->phase)
+            ->update(['activo' => 0]);
+
+        return redirect()->route('admin.matches')
+            ->with('success', "Partidos de la fase {$request->phase} desactivados correctamente");
+    }
+
+    public function createMatch(Request $request)
+    {
+
+        $request->validate([
+            'team_a' => 'required|string',
+            'team_b' => 'required|string|different:team_a',
+            'phase' => 'required|string',
+            'team_a_logo' => 'required|string',
+            'team_b_logo' => 'required|string',
+        ]);
+
+        // Crear partido de ida
+        FootballMatch::create([
+            'team_a' => $request->team_a,
+            'team_b' => $request->team_b,
+            'team_a_logo' => $request->team_a_logo,
+            'team_b_logo' => $request->team_b_logo,
+            'phase' => $request->phase,
+            'is_first_leg' => true,
+            'activo' => 0
+        ]);
+
+        // Crear partido de vuelta
+        if(in_array($request->phase, ['Quarters', 'Semifinals', 'Final'])){
+            FootballMatch::create([
+                'team_a' => $request->team_b,
+                'team_b' => $request->team_a,
+                'team_a_logo' => $request->team_b_logo,
+                'team_b_logo' => $request->team_a_logo,
+                'phase' => $request->phase,
+                'is_first_leg' => true,
+                'activo' => 0
+            ]);
+        }
+
+        return redirect()->route('admin.matches')->with('success', 'Partidos creados correctamente');
+    }
 }

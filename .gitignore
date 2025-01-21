@@ -46,3 +46,10 @@ vendor/composer/installed.php
 bootstrap/cache/config.php
 /vendor/*
 /vendor/composer
+bootstrap/cache/config.php
+bootstrap/cache/config.php
+bootstrap/cache/routes-v7.php
+composer.json
+composer.lock
+storage/logs/laravel.log
+vendor/composer/installed.php
