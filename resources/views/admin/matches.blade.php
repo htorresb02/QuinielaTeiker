@@ -66,20 +66,20 @@
                     @foreach($matches as $phase => $phaseMatches)
                         <div class="card mb-3">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0">Fase {{ $phase }}</h5>
+                                <h5 class="mb-0">Jornada {{ $phase }}</h5>
                                 <div>
                                     <form action="{{ route('admin.matches.activate') }}" method="POST" class="d-inline">
                                         @csrf
                                         <input type="hidden" name="phase" value="{{ $phase }}">
                                         <button type="submit" class="btn btn-success btn-sm">
-                                            Activar Fase
+                                            Activar Jornada
                                         </button>
                                     </form>
                                     <form action="{{ route('admin.matches.deactivate') }}" method="POST" class="d-inline">
                                         @csrf
                                         <input type="hidden" name="phase" value="{{ $phase }}">
                                         <button type="submit" class="btn btn-danger btn-sm">
-                                            Desactivar Fase
+                                            Desactivar Jornada
                                         </button>
                                     </form>
                                 </div>
