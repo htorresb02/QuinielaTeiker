@@ -5,7 +5,7 @@
     <!-- Instrucciones de la Quiniela -->
     <div class="card mb-4">
         <div class="card-body">
-            <h2 class="card-title text-center">¡Importante! Cada usuario debe de tener 8 capturas</h2>
+            <h2 class="card-title text-center">¡Importante! Cada usuario debe de tener 9 capturas</h2>
             <p class="card-text">
                 
             </p>

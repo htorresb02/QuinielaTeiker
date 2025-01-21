@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', 'Gestion de Juegos')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -121,7 +121,7 @@
         </div>
     </div>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const teamASelect = document.getElementById('team_a');
