@@ -40,7 +40,11 @@
                 @foreach ($rankings as $index => $user)
                     <tr>
                         <td>{{ $index + 1 }}</td>
-                        <td>{{ $user['name'] }}</td>
+                        @if($index + 1 == 2)
+                            <td> {{ $user['name'] }}<img src="/images/ramiro.png" style="width: 25px; height: 25px;"></td>
+                        @else
+                            <td>{{ $user['name'] }}</td>
+                        @endif
                         <td>{{ $user['points'] }}</td>
                     </tr>
                 @endforeach
@@ -77,7 +81,11 @@
                 <tr >
                     <td style="width: 10px; height: 100%;" ><div style="width: 10px; height: 100%; {{ $borderColor }} border-radius: 2px;"></div></td>
                     <td>{{ $index + 1 }}</td>
-                    <td>{{ $user['name'] }}</td>
+                    @if($index + 1 == 2)
+                        <td> {{ $user['name'] }}<img src="/images/ramiro.png" style="width: 25px; height: 25px;"></td>
+                    @else
+                        <td>{{ $user['name'] }}</td>
+                    @endif
                     <td>{{ $user['total_points'] }}</td>
                 </tr>
             @endforeach
