@@ -205,18 +205,24 @@ class AdminController extends Controller
 
     public function showAllQuinielas()
     {
+        // Obtener todos los usuarios con sus predicciones
         $result = DB::table('users')
             ->leftJoin('predictions', 'users.id', '=', 'predictions.user_id')
             ->leftJoin('matches', 'predictions.match_id', '=', 'matches.id')
-            ->select('users.id', 'users.name', DB::raw('COUNT(predictions.id) as total_predicciones'))
-            ->where(function ($query) {
-                $query->whereNull('matches.id')
-                      ->orWhere('matches.activo', 1);
-            })
+            ->select(
+                'users.id', 
+                'users.name', 
+                DB::raw('COUNT(CASE WHEN matches.activo = 1 OR matches.id IS NULL THEN predictions.id END) as total_predicciones'),
+                DB::raw('CASE WHEN COUNT(CASE WHEN matches.activo = 1 OR matches.id IS NULL THEN predictions.id END) = 0 THEN true ELSE false END as falta_capturar')
+            )
             ->groupBy('users.id', 'users.name')
             ->get();
 
-        return view('admin.quiniela-capturadas', compact('result'));
+        // Separar usuarios en dos grupos
+        $usuariosCompletos = $result->where('total_predicciones', '>', 0);
+        $usuariosFaltantes = $result->where('falta_capturar', true);
+
+        return view('admin.quiniela-capturadas', compact('usuariosCompletos', 'usuariosFaltantes'));
     }
 
     public function showMatchForm()
