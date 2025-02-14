@@ -42,8 +42,8 @@
                         <td>{{ $index + 1 }}</td>
                         @if($user['name'] == 'Ramiro')
                             <td> {{ $user['name'] }}<img src="/images/ramiro.png" style="width: 25px; height: 25px;"></td>
-                        @elseif($user['name'] == 'Lugo')
-                            <td> {{ $user['name'] ." 🎱"}}</td>
+                        @elseif($user['name'] == 'Gus')
+                            <td> {{ $user['name']}}<img src="/images/el_gus.png" style="width: 35px; height: 35px;"></td>
                         @else
                             <td>{{ $user['name'] }}</td>
                         @endif
@@ -85,8 +85,8 @@
                     <td>{{ $index + 1 }}</td>
                     @if($user['name'] == 'Ramiro')
                         <td> {{ $user['name'] }}<img src="/images/ramiro.png" style="width: 25px; height: 25px;"></td>
-                    @elseif($user['name'] == 'Lugo')
-                        <td> {{ $user['name'] ." 🎱"}}</td>
+                    @elseif($user['name'] == 'Gus')
+                        <td> {{ $user['name']}}<img src="/images/el_gus.png" style="width: 35px; height: 35px;"></td>
                     @else
                         <td>{{ $user['name'] }}</td>
                     @endif
