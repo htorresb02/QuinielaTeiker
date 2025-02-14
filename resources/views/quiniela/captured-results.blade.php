@@ -50,7 +50,15 @@
                             <ul class="list-group">
                                 @foreach ($match->predictions as $prediction)
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <span>{{ $prediction->user->name ?? 'Usuario desconocido' }}</span>
+                                        @if($prediction->user->name == 'Ramiro')
+                                            <span>{{ $prediction->user->name ?? 'Usuario desconocido' }}<img src="/images/ramiro.png" style="width: 25px; height: 25px;"></span>
+                                        @elseif($prediction->user->name == 'Gus')
+                                            <span>{{ $prediction->user->name ?? 'Usuario desconocido' }}<img src="/images/el_gus.png" style="width: 35px; height: 35px;"></span>
+                                        @elseif($prediction->user->name == 'Neto')
+                                            <span>{{ $prediction->user->name ?? 'Usuario desconocido' }}<img src="/images/neto2.png" style="width: 30px; height: 30px;"></span>
+                                        @else
+                                            <span>{{ $prediction->user->name ?? 'Usuario desconocido' }}</span>
+                                        @endif
                                         <span>{{ $prediction->predicted_score_a }} - {{ $prediction->predicted_score_b }}</span>
                                     </li>
                                 @endforeach
